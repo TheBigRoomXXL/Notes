@@ -119,14 +119,15 @@ main {
 /* ===== TOP BAR ===== */
 
 header>h1 {
-    margin-top: 0.1em;
+    margin-top: 0.10em;
+    margin-right: 1em;
     font-family: 'Noto Serif Display', Didot, 'Bodoni MT', 'URW Palladio L', P052, Sylfaen, serif;
 }
 
 search {
     display: flex;
     flex-grow: 1;
-    max-width: 35ch;
+    max-width: 40ch;
 }
 
 search>input {

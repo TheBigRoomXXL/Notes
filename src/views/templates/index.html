@@ -11,11 +11,11 @@
     <meta name="author" content="Sebastien LOVERGNE">
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="/favicon.svg" type="image/svg+xml">
 
-    <link rel="stylesheet" href="/styles.css">
-    <script src="/lib/masonry.min.js"></script>
-    <script src="/lib/htmx.min.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/lib/masonry.min.js"></script>
+    <script src="/static/lib/htmx.min.js"></script>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
         </search>
     </header>
     <main id="notes">
-
+        Hello, {{.}}
         <textarea id="1" class="note"
             spellcheck="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hac mi primis pellentesque urna lorem semper eros pharetra diam sapien tincidunt etiam habitant. Viverra nulla non tempus quis donec habitasse aenean donec potenti viverra potenti gravida enim. Mus litora hendrerit nisi cras maecenas vestibulum fringilla id mattis cubilia imperdiet phasellus imperdiet. Sodales sapien tellus rutrum parturient aliquam metus integer sed tempor parturient eget neque ultrices. Bibendum diam ligula aptent egestas potenti dolor inceptos erat proin class magnis id tempus. Bibendum ad mattis imperdiet fusce gravida magna semper per eleifend sem cras eget consectetur.</textarea>
 
@@ -57,7 +57,7 @@
         </textarea>
 
     </main>
-    <script src="/app.js"></script>
+    <script src="/static/app.js"></script>
 </body>
 
 </html>
