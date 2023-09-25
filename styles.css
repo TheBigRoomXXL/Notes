@@ -1,0 +1,179 @@
+/* ===== FONTS ===== */
+
+@font-face {
+    font-family: 'Atkinson';
+    src: url('/fonts/atkinson-regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Atkinson';
+    src: url('/fonts/atkinson-bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ===== RESET ===== */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Prevent font size inflation */
+html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
+    line-height: 1.1;
+}
+
+/* ===== THEME ===== */
+
+:root {
+    --color-primary: #009abd;
+    --color-text: #c9cbd1;
+    --color-bg: #1D1F21;
+    --color-bg2: #2B2A33;
+    --color-bd: #bbbbbb;
+
+    color-scheme: dark light;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --color-primary: #207D92;
+        --color-text: #2b2d30;
+        --color-bg: white;
+        --color-bg2: #fdfdfd;
+        --color-bd: #bbbbbb;
+    }
+}
+
+html {
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    font-family: "Atkinson", sans-serif;
+    line-height: 1.5em;
+}
+
+
+/* ===== LAYOUT ===== */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 0.5rem 1rem;
+    color: white;
+    background-color: var(--color-primary);
+}
+
+main {
+    min-height: calc(100vh - 2rem);
+    margin: 2rem;
+}
+
+
+
+/* ===== TOP BAR ===== */
+
+header>h1 {
+    margin-top: 0.1em;
+    font-family: 'Noto Serif Display', Didot, 'Bodoni MT', 'URW Palladio L', P052, Sylfaen, serif;
+}
+
+search {
+    display: flex;
+    flex-grow: 1;
+    max-width: 35ch;
+}
+
+search>input {
+    width: 100%;
+    padding: 0 1ch;
+    color: #2b2d30;
+    background-color: white;
+    border: 2px solid var(--color-primary);
+    border-radius: 0.25em;
+    outline: none;
+}
+
+search>input:focus {
+    outline: 0.5px solid white;
+    outline-offset: 0.5px;
+}
+
+/* ===== TEXTAREA ===== */
+
+textarea {
+    padding: .5em;
+    width: 300px;
+    font-size: 1rem;
+    font-family: "Atkinson", sans-serif;
+    line-height: 1.5em;
+    resize: none;
+    color: var(--color-text);
+    background-color: var(--color-bg2);
+    /* vertical space for masonory*/
+    margin-bottom: 15px;
+
+}
+
+/* ===== LINKS ===== */
+a:link {
+    color: var(--color-primary)
+}
+
+a:visited {
+    color: var(--color-secondary)
+}
+
+a:hover {
+    opacity: 0.8
+}
+
+/* ===== UTILS ====== */
+.separator {
+    flex-grow: 10;
+}
