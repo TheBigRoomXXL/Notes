@@ -77,7 +77,7 @@ label {
 
 @media (prefers-color-scheme: light) {
     :root {
-        --color-primary: #207D92;
+        --color-primary: #20879e;
         --color-text: #2b2d30;
         --color-bg: white;
         --color-bg2: #fdfdfd;
