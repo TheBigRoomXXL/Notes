@@ -111,7 +111,7 @@ header {
 
 main {
     min-height: calc(100vh - 2rem);
-    margin: 2rem;
+    margin: 2rem auto;
 }
 
 
@@ -148,13 +148,14 @@ search>input:focus {
 
 textarea {
     padding: .5em;
-    width: 300px;
+    width: 350px;
     font-size: 1rem;
     font-family: "Atkinson", sans-serif;
     line-height: 1.5em;
     resize: none;
     color: var(--color-text);
     background-color: var(--color-bg2);
+    border: 2px solid grey;
     /* vertical space for masonory*/
     margin-bottom: 15px;
 

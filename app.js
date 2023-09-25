@@ -1,9 +1,4 @@
 // Bloody hack because textarea cannot grow automatically with user input
-function resizeTextarea() {
-    this.style.height = '12px';
-    this.style.height = "calc(" + this.scrollHeight + "px + 2em)";
-}
-
 
 window.addEventListener("load", () => {
 
@@ -16,9 +11,16 @@ window.addEventListener("load", () => {
         transitionDuration: 0,
     });
 
+    function resizeTextarea() {
+        this.style.height = '12px';
+        this.style.height = this.scrollHeight + 4 + "px";
+        masonry.layout()
+    }
+
     textareas = document.querySelectorAll("textarea")
     textareas.forEach(textarea => {
-        textarea.style.height = textarea.scrollHeight + 2 + 'px';
+        textarea.style.height = '12px';
+        textarea.style.height = textarea.scrollHeight + 4 + 'px';
         textarea.addEventListener('input', resizeTextarea);
     });
     masonry.layout()
