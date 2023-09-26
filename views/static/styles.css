@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: 'Atkinson';
-    src: url('/fonts/atkinson-regular.woff') format('woff');
+    src: url('/static/fonts/atkinson-regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: 'Atkinson';
-    src: url('/fonts/atkinson-bold.woff') format('woff');
+    src: url('/staticfonts/atkinson-bold.woff') format('woff');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -156,10 +156,16 @@ textarea {
     resize: none;
     color: var(--color-text);
     background-color: var(--color-bg2);
-    border: 2px solid grey;
+    border: solid 2px grey;
     /* vertical space for masonory*/
     margin-bottom: 15px;
+}
 
+textarea:focus {
+    border: solid 2px var(--color-primary);
+    outline: solid 2px var(--color-primary);
+    /* outline-offset: 0.25em; */
+    border-radius: 0.25em;
 }
 
 /* ===== LINKS ===== */

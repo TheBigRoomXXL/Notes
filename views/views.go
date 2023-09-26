@@ -5,6 +5,8 @@ import (
 	"io"
 
 	"github.com/labstack/echo/v4"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type Template struct {
@@ -16,5 +18,5 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 var T = &Template{
-	templates: template.Must(template.ParseGlob("src/views/templates/*.html")),
+	templates: template.Must(template.ParseGlob("views/templates/*.html")),
 }
