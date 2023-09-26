@@ -1,4 +1,4 @@
-package views
+package app
 
 import (
 	"html/template"
@@ -18,5 +18,5 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 var T = &Template{
-	templates: template.Must(template.ParseGlob("views/templates/*.html")),
+	templates: template.Must(template.ParseGlob("*/templates/*.html")),
 }
