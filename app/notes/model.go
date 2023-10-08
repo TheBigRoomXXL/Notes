@@ -6,7 +6,7 @@ import (
 )
 
 type NoteSerializer struct {
-	Id      int    `query:"id" form:"id" json:"id"`
+	Id      int    `param:"id" form:"id" json:"id"`
 	Content string `form:"content" json:"content"`
 }
 

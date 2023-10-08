@@ -65,6 +65,7 @@ func PutNote(c echo.Context) error {
 	if err != nil {
 		return err
 	}
+	log.Info(validInput)
 
 	note, err := UpdateNote(
 		c.Get("db").(*sql.DB),
