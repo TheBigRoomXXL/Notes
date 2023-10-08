@@ -1,14 +1,12 @@
 {{define "create_note"}}
 
-
-<textarea id="create_note"
-          class="note"
-          name="content"
-          rows="2"
-          placeholder="Start a new note..."
-          autofocus
-          hx-post="/notes"
-          hx-trigger="change"
-          hx-swap="afterend"></textarea>
-
+<form id="create_note" hx-post="/notes" hx-trigger="change" hx-swap="afterend">
+    <textarea
+              id="0"
+              class="note"
+              name="content"
+              placeholder="Start a new note..."
+              autofocus></textarea>
+    <label hidden for="0">Create a new note</label>
+</form>
 {{end}}

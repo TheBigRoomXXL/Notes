@@ -1,7 +1,6 @@
 {{define "note"}}
-<textarea
-          id="{{.Id}}"
-          class="note"
-          hx-put="/notes/{{.Id}}"
-          hx-trigger="change">{{ .Content }}</textarea>
+<form hx-put="/notes/{{.Id}}" hx-trigger="change">
+    <textarea name=content id="{{.Id}}" class="note">{{ .Content }}</textarea>
+    <label hidden for="{{.Id}}">Edit this note</label>
+</form>
 {{end}}

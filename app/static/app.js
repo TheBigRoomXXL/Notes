@@ -11,14 +11,16 @@ function resizeTextarea() {
 
 function handleNoteCreated() {
     create_note = document.getElementById("create_note");
-    create_note.value = "";
     resizeTextarea.call(create_note);
+
+    create_note_input = create_note.firstElementChild;
+    create_note_input.value = "";
 
     masonry.reloadItems();
     new_note = create_note.nextSibling;
-    new_note.focus();
+    new_note.firstElementChild.focus();
 
-    resizeTextarea.call(new_note);
+    resizeTextarea.call(new_note.firstElementChild);
     new_note.addEventListener("input", resizeTextarea);
 }
 

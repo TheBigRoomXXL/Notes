@@ -44,10 +44,10 @@ func PostNotes(c echo.Context) error {
 		return err
 	}
 
-	db := c.Get("db").(*sql.DB)
-	note, err := InsertNote(db, Note{
-		Content: validInput.Content,
-	})
+	note, err := InsertNote(
+		c.Get("db").(*sql.DB),
+		Note{Content: validInput.Content},
+	)
 	if err != nil {
 		return err
 	}
@@ -60,9 +60,16 @@ func PostNotes(c echo.Context) error {
 }
 
 func PutNote(c echo.Context) error {
-	db := c.Get("db").(*sql.DB)
-	note := Note{Id: 0, Content: c.FormValue("content")}
-	note, err := UpdateNote(db, note)
+	var validInput NoteSerializer
+	err := c.Bind(&validInput)
+	if err != nil {
+		return err
+	}
+
+	note, err := UpdateNote(
+		c.Get("db").(*sql.DB),
+		Note{Id: validInput.Id, Content: validInput.Content},
+	)
 	if err != nil {
 		return err
 	}
