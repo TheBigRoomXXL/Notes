@@ -22,18 +22,10 @@
 <body>
     <header>
         <h1>Nøtes</h1>
-        <search>
-            <input id="fts-search" type="text" placeholder="Search notes...">
-            </input>
-            <label hidden for="fts-search">Search all the notes for a match</label>
-        </search>
+        {{ template "search" }}
     </header>
     <main id="notes">
-        {{ template "create_note" }}
-
-        {{range $note := .}}
-        {{ template "note" . }}
-        {{end}}
+        {{ template "main" .}}
     </main>
     <script src="/static/app.js"></script>
 </body>

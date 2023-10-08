@@ -2,6 +2,7 @@ package notes
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -10,7 +11,7 @@ import (
 
 func Index(c echo.Context) error {
 	db := c.Get("db").(*sql.DB)
-	notes, err := SelectNotes(db, "")
+	notes, err := SelectNotes(db, noteSearch{})
 	if err != nil {
 		log.Error(err)
 		return err
@@ -24,13 +25,20 @@ func Index(c echo.Context) error {
 }
 
 func GetNotes(c echo.Context) error {
+	var validInput noteSearch
+	err := c.Bind(&validInput)
+	if err != nil {
+		return err
+	}
+	fmt.Println(validInput.Search)
+
 	db := c.Get("db").(*sql.DB)
-	notes, err := SelectNotes(db, "")
+	notes, err := SelectNotes(db, validInput)
 	if err != nil {
 		return err
 	}
 
-	err = c.Render(http.StatusOK, "notes", notes)
+	err = c.Render(http.StatusOK, "main", notes)
 	if err != nil {
 		log.Error(err)
 	}
@@ -38,7 +46,7 @@ func GetNotes(c echo.Context) error {
 }
 
 func PostNotes(c echo.Context) error {
-	var validInput NoteSerializer
+	var validInput noteSerializer
 	err := c.Bind(&validInput)
 	if err != nil {
 		return err
@@ -60,7 +68,7 @@ func PostNotes(c echo.Context) error {
 }
 
 func PutNote(c echo.Context) error {
-	var validInput NoteSerializer
+	var validInput noteSerializer
 	err := c.Bind(&validInput)
 	if err != nil {
 		return err

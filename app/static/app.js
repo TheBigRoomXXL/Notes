@@ -9,6 +9,8 @@ function resizeTextarea() {
     masonry.layout();
 }
 
+
+// Hack because masonry is doesn't handle changes to the DOM
 function handleNoteCreated() {
     create_note = document.getElementById("create_note");
     resizeTextarea.call(create_note);
@@ -22,6 +24,21 @@ function handleNoteCreated() {
 
     resizeTextarea.call(new_note.firstElementChild);
     new_note.addEventListener("input", resizeTextarea);
+}
+
+// Hack because masonry is doesn't handle changes to the DOM
+function handleSearchSuccessfull() {
+    masonry.reloadItems();
+    masonry.layout();
+
+    textareas = document.querySelectorAll("textarea");
+    textareas.forEach(textarea => {
+        resizeTextarea.call(textarea);
+        textarea.addEventListener("input", resizeTextarea);
+    });
+
+    search = document.getElementById("fts-search");
+    search.focus();
 }
 
 window.addEventListener("load", () => {
@@ -38,7 +55,6 @@ window.addEventListener("load", () => {
     textareas = document.querySelectorAll("textarea");
     textareas.forEach(textarea => {
         resizeTextarea.call(textarea);
-
         textarea.addEventListener("input", resizeTextarea);
     });
     masonry.layout();
@@ -47,5 +63,8 @@ window.addEventListener("load", () => {
 document.addEventListener("htmx:afterSwap", function (evt) {
     if (evt.detail.requestConfig.elt.id == "create_note" && evt.detail.successful) {
         handleNoteCreated(evt);
+    }
+    if (evt.detail.requestConfig.elt.id == "fts-search" && evt.detail.successful) {
+        handleSearchSuccessfull(evt);
     }
 });

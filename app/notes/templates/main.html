@@ -1,0 +1,6 @@
+{{ define "main" }}
+    {{ template "create_note" . }}
+    {{ range $note := . }}
+        {{ template "note" . }}
+    {{ end }}
+{{ end }}

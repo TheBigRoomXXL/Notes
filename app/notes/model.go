@@ -2,12 +2,17 @@ package notes
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 )
 
-type NoteSerializer struct {
+type noteSerializer struct {
 	Id      int    `param:"id" form:"id" json:"id"`
 	Content string `form:"content" json:"content"`
+}
+
+type noteSearch struct {
+	Search string `query:"search" form:"search" json:"search"`
 }
 
 type Note struct {
@@ -17,13 +22,22 @@ type Note struct {
 	Updated_at time.Time
 }
 
-func SelectNotes(db *sql.DB, search string) ([]Note, error) {
+func SelectNotes(db *sql.DB, query noteSearch) ([]Note, error) {
+	fmt.Print(query.Search)
+	fmt.Print(query.Search == "")
+
+	fmt.Println(`
+	SELECT id, content
+	FROM notes 
+	WHERE content LIKE '%'||?||'%'
+	ORDER BY updated_at DESC
+	`, query.Search)
 	rows, err := db.Query(`
 		SELECT id, content
 		FROM notes 
-		WHERE content LIKE '%' || $1 || '%'
+		WHERE content LIKE '%'||?||'%'
 		ORDER BY updated_at DESC
-		`, search)
+	`, query.Search)
 	if err != nil {
 		return nil, err
 	}

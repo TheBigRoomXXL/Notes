@@ -1,0 +1,16 @@
+{{ define "search"}}
+
+<search>
+    <input
+           id="fts-search"
+           hx-get="/notes"
+           hx-swap="innerHTML"
+           hx-target="#notes"
+           name="search"
+           type="text"
+           placeholder="Search notes...">
+    </input>
+    <label hidden for="fts-search">Search all the notes for a match</label>
+</search>
+
+{{ end }}
