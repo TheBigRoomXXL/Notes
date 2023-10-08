@@ -1,0 +1,7 @@
+{{define "note"}}
+<textarea
+          id="{{.Id}}"
+          class="note"
+          hx-put="/notes/{{.Id}}"
+          hx-trigger="change">{{ .Content }}</textarea>
+{{end}}

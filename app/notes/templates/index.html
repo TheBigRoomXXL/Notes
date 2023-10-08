@@ -1,4 +1,4 @@
-{{define "index.html"}}
+{{define "index"}}
 <!doctype html>
 
 <html lang="en">
@@ -11,8 +11,8 @@
     <meta name="description" content="minimalist note app">
     <meta name="author" content="Sebastien LOVERGNE">
 
-    <link rel="icon" href="static/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="static/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="static/favicon.png" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="static/favicon.png" type="image/svg+xml">
 
     <link rel="stylesheet" href="/static/styles.css">
     <script src="/static/lib/masonry.min.js"></script>
@@ -24,13 +24,15 @@
         <h1>Nøtes</h1>
         <search>
             <input id="fts-search" type="text" placeholder="Search notes...">
+
             </input>
         </search>
     </header>
     <main id="notes">
-        <textarea id="new_note" class="note" placeholder="Start a new note..." autofocus></textarea>
+        {{ template "create_note" }}
+
         {{range $note := .}}
-        <textarea id="{{.Id}}" class="note">{{ printf "%s" .Content }}</textarea>
+        {{ template "note" . }}
         {{end}}
     </main>
     <script src="/static/app.js"></script>

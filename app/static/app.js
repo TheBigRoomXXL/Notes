@@ -1,27 +1,49 @@
-// Bloody hack because textarea cannot grow automatically with user input
+
+var main = undefined;
+var masonry = undefined;
+
+// Hack because textarea cannot grow automatically with user input
+function resizeTextarea() {
+    this.style.height = "12px";
+    this.style.height = this.scrollHeight + 4 + "px";
+    masonry.layout();
+}
+
+function handleNoteCreated() {
+    create_note = document.getElementById("create_note");
+    create_note.value = "";
+    resizeTextarea.call(create_note);
+
+    masonry.reloadItems();
+    new_note = create_note.nextSibling;
+    new_note.focus();
+
+    resizeTextarea.call(new_note);
+    new_note.addEventListener("input", resizeTextarea);
+}
 
 window.addEventListener("load", () => {
+    main = document.getElementById("notes");
 
-    var main = document.getElementById("notes")
-
-    var masonry = new Masonry(main, {
+    masonry = new Masonry(main, {
         itemSelector: ".note",
         gutter: 15,
         isFitWidth: true,
+        horizontalOrder: true,
         transitionDuration: 0,
     });
 
-    function resizeTextarea() {
-        this.style.height = '12px';
-        this.style.height = this.scrollHeight + 4 + "px";
-        masonry.layout()
-    }
-
-    textareas = document.querySelectorAll("textarea")
+    textareas = document.querySelectorAll("textarea");
     textareas.forEach(textarea => {
-        textarea.style.height = '12px';
-        textarea.style.height = textarea.scrollHeight + 4 + 'px';
-        textarea.addEventListener('input', resizeTextarea);
+        resizeTextarea.call(textarea);
+
+        textarea.addEventListener("input", resizeTextarea);
     });
-    masonry.layout()
-})
+    masonry.layout();
+});
+
+document.addEventListener("htmx:afterSwap", function (evt) {
+    if (evt.detail.requestConfig.elt.id == "create_note" && evt.detail.successful) {
+        handleNoteCreated(evt);
+    }
+});

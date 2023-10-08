@@ -1,19 +1,29 @@
-package note
+package notes
 
 import (
 	"database/sql"
-
-	"github.com/labstack/echo/v4"
+	"time"
 )
 
+type NoteSerializer struct {
+	Id      int    `query:"id" form:"id" json:"id"`
+	Content string `form:"content" json:"content"`
+}
+
 type Note struct {
-	Id      int
-	Content string
+	Id         int
+	Content    string
+	Created_at time.Time
+	Updated_at time.Time
 }
 
-func SelectNotes(c echo.Context) ([]Note, error) {
-	db := c.Get("db").(*sql.DB)
-	rows, err := db.Query("SELECT * FROM notes ")
+func SelectNotes(db *sql.DB, search string) ([]Note, error) {
+	rows, err := db.Query(`
+		SELECT id, content
+		FROM notes 
+		WHERE content LIKE '%' || $1 || '%'
+		ORDER BY updated_at DESC
+		`, search)
 	if err != nil {
 		return nil, err
 	}
@@ -33,46 +43,48 @@ func SelectNotes(c echo.Context) ([]Note, error) {
 	return notes, nil
 }
 
-func InsertNote(c echo.Context) ([]Note, error) {
-	db := c.Get("db").(*sql.DB)
-	rows, err := db.Query("SELECT * FROM notes ")
+func InsertNote(db *sql.DB, note Note) (Note, error) {
+	tx, err := db.Begin()
 	if err != nil {
-		return nil, err
+		return note, err
 	}
-	defer rows.Close()
 
-	notes := []Note{}
-	for rows.Next() {
-		var note Note
-		if err := rows.Scan(&note.Id, &note.Content); err != nil {
-			return nil, err
-		}
-		notes = append(notes, note)
+	var id int
+	err = tx.QueryRow(
+		`INSERT INTO notes (content) VALUES (?) RETURNING id`,
+		note.Content).Scan(&id)
+	if err != nil {
+		return note, err
 	}
-	if err = rows.Err(); err != nil {
-		return nil, err
+
+	if tx.Commit() != nil {
+		return note, err
 	}
-	return notes, nil
+
+	note.Id = id
+
+	return note, nil
 }
 
-func UpdateNote(c echo.Context) ([]Note, error) {
-	db := c.Get("db").(*sql.DB)
-	rows, err := db.Query("SELECT * FROM notes ")
+func UpdateNote(db *sql.DB, note Note) (Note, error) {
+	tx, err := db.Begin()
 	if err != nil {
-		return nil, err
+		return note, err
 	}
-	defer rows.Close()
 
-	notes := []Note{}
-	for rows.Next() {
-		var note Note
-		if err := rows.Scan(&note.Id, &note.Content); err != nil {
-			return nil, err
-		}
-		notes = append(notes, note)
+	_, err = tx.Exec(`
+		UPDATE notes 
+		SET content = $1
+		WHERE id = $2`,
+		note.Content,
+		note.Id)
+	if err != nil {
+		return note, err
 	}
-	if err = rows.Err(); err != nil {
-		return nil, err
+
+	if tx.Commit() != nil {
+		return note, err
 	}
-	return notes, nil
+
+	return note, nil
 }

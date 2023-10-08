@@ -1,0 +1,14 @@
+{{define "create_note"}}
+
+
+<textarea id="create_note"
+          class="note"
+          name="content"
+          rows="2"
+          placeholder="Start a new note..."
+          autofocus
+          hx-post="/notes"
+          hx-trigger="change"
+          hx-swap="afterend"></textarea>
+
+{{end}}

@@ -21,11 +21,11 @@ func Run() {
 	e.Use(middlewareDb(db))
 
 	//Routes
-	e.Static("/static", "/app/static")
+	e.Static("/static", "app/static")
 	e.GET("/", note.Index)
 	e.GET("/notes", note.GetNotes)
-	e.POST("/notes", note.PostNote)
-	e.PUT("/notes/id", note.PutNote)
+	e.POST("/notes", note.PostNotes)
+	e.PUT("/notes/:id", note.PutNote)
 
 	e.Logger.Fatal(e.Start(":3000"))
 }
