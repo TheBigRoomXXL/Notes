@@ -2,6 +2,7 @@ package app
 
 import (
 	note "notes/app/notes"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -19,6 +20,11 @@ func Run() {
 		Format: "${status}: ${method} \"${uri}\" \n",
 	}))
 	e.Use(middlewareDb(db))
+	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
+		Skipper: func(c echo.Context) bool {
+			return !strings.Contains(c.Path(), "static")
+		},
+	}))
 
 	//Routes
 	e.Static("/static", "app/static")
