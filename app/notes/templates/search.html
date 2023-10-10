@@ -4,11 +4,13 @@
     <input
            id="fts-search"
            hx-get="/notes"
+           hx-trigger="input"
            hx-swap="innerHTML"
            hx-target="#notes"
            name="search"
            type="text"
-           placeholder="Search notes...">
+           placeholder="Search notes..."
+           autofocus>
     </input>
     <label hidden for="fts-search">Search all the notes for a match</label>
 </search>

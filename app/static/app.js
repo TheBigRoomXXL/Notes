@@ -28,6 +28,8 @@ function handleNoteCreated() {
 
 // Hack because masonry is doesn't handle changes to the DOM
 function handleSearchSuccessfull() {
+    console.log("handleSearchSuccessfull");
+
     masonry.reloadItems();
     masonry.layout();
 
@@ -39,6 +41,8 @@ function handleSearchSuccessfull() {
 
     search = document.getElementById("fts-search");
     search.focus();
+
+
 }
 
 window.addEventListener("load", () => {
@@ -60,7 +64,7 @@ window.addEventListener("load", () => {
     masonry.layout();
 });
 
-document.addEventListener("htmx:afterSwap", function (evt) {
+document.addEventListener("htmx:afterSettle", function (evt) {
     if (evt.detail.requestConfig.elt.id == "create_note" && evt.detail.successful) {
         handleNoteCreated(evt);
     }
