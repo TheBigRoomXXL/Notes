@@ -67,10 +67,9 @@ label {
 
 :root {
     --color-primary: #009abd;
-    --color-text: #c9cbd1;
-    --color-bg: #1D1F21;
-    --color-bg2: #2B2A33;
-    --color-bd: #bbbbbb;
+    --color-text: #dbdbdb;
+    --color-bg: #202124;
+    --color-bd: #5f6368;
 
     color-scheme: dark light;
 }
@@ -79,8 +78,7 @@ label {
     :root {
         --color-primary: #20879e;
         --color-text: #2b2d30;
-        --color-bg: white;
-        --color-bg2: #fdfdfd;
+        --color-bg: #fdfdfd;
         --color-bd: #bbbbbb;
     }
 }
@@ -105,8 +103,9 @@ header {
     justify-content: space-between;
 
     padding: 0.5rem 1rem;
-    color: white;
-    background-color: var(--color-primary);
+    border-bottom: solid 2px var(--color-bd);
+    /* color: white; */
+    /* background-color: var(--color-primary); */
 }
 
 main {
@@ -163,8 +162,9 @@ textarea {
     line-height: 1.5em;
     resize: none;
     color: var(--color-text);
-    background-color: var(--color-bg2);
-    border: solid 2px grey;
+    background-color: var(--color-bg);
+    border: solid 2px var(--color-bd);
+    border-radius: 8px;
 }
 
 textarea:focus {

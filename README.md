@@ -6,6 +6,7 @@
 
 - Unit test
 - Delete operation
+- pagination
 - Refactor pipiline (serialize | validate | State management | serialize)
 - Footer with tags
 - Login
@@ -15,4 +16,4 @@
 - REST API with rapidoc
 - Packaging
 - Migration magement
-
+- import export
