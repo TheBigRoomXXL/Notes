@@ -2,7 +2,6 @@ package notes
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -30,7 +29,6 @@ func GetNotes(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(validInput.Search)
 
 	db := c.Get("db").(*sql.DB)
 	notes, err := SelectNotes(db, validInput)

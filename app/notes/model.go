@@ -2,7 +2,7 @@ package notes
 
 import (
 	"database/sql"
-	"fmt"
+	"strings"
 	"time"
 )
 
@@ -23,15 +23,9 @@ type Note struct {
 }
 
 func SelectNotes(db *sql.DB, query noteSearch) ([]Note, error) {
-	fmt.Print(query.Search)
-	fmt.Print(query.Search == "")
+	keywords := getKeywords(query)
 
-	rows, err := db.Query(`
-		SELECT id, content
-		FROM notes 
-		WHERE content LIKE '%'||?||'%'
-		ORDER BY updated_at DESC
-	`, query.Search)
+	rows, err := buildFtsQuery(db, keywords)
 	if err != nil {
 		return nil, err
 	}
@@ -95,4 +89,37 @@ func UpdateNote(db *sql.DB, note Note) (Note, error) {
 	}
 
 	return note, nil
+}
+
+func getKeywords(query noteSearch) []interface{} {
+	raw := strings.Fields(query.Search)
+	keywords := []interface{}{}
+	for _, keyword := range raw {
+		keywords = append(keywords, "%"+keyword+"%")
+	}
+	return keywords
+}
+
+func buildFtsQuery(db *sql.DB, keywords []interface{}) (*sql.Rows, error) {
+	var stmt strings.Builder
+	stmt.WriteString(`
+		SELECT id, content
+		FROM notes 
+	`)
+
+	if len(keywords) > 0 {
+		stmt.WriteString(` WHERE content LIKE ?`)
+
+	}
+
+	if len(keywords) > 1 {
+		for i := 0; i < len(keywords)-1; i++ {
+			stmt.WriteString(` AND content LIKE ?`)
+		}
+	}
+
+	stmt.WriteString(` ORDER BY updated_at DESC`)
+	rows, err := db.Query(stmt.String(), keywords...)
+
+	return rows, err
 }
