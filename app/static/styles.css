@@ -63,6 +63,14 @@ label {
     line-height: 1.1;
 }
 
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
 /* ===== THEME ===== */
 
 :root {
@@ -150,6 +158,10 @@ search>input:focus {
 }
 
 /* ===== Notes ===== */
+
+form {
+    display: inline-block;
+}
 
 textarea {
     padding: .5em;

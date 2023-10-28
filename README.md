@@ -17,3 +17,10 @@
 - Packaging
 - Migration magement
 - import export
+
+
+## Acknownledge
+
+CSS Reset from [Andy-Bell](https://andy-bell.co.uk/a-more-modern-css-reset/)
+
+JS Masonry adapted from ["A Lightweight Masonry Solution" by  Ana Tudor](https://css-tricks.com/a-lightweight-masonry-solution/) 

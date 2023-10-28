@@ -31,13 +31,12 @@ function handleNoteCreated() {
 }
 
 function handleSearchSuccessfull() {
-    layout();
-
     textareas = document.querySelectorAll("textarea");
     textareas.forEach(textarea => {
         resizeTextarea.call(textarea);
         textarea.addEventListener("input", resizeTextarea);
     });
+    layout();
 
     search = document.getElementById("fts-search");
     search.focus();
@@ -46,9 +45,11 @@ function handleSearchSuccessfull() {
 
 // JS fallback for masonry
 let grid = undefined;
-let gridEl = document.getElementById("notes");
+let gridEl = document.querySelectorAll("#notes");
+gridEl = document.getElementById("notes");
+
 if (getComputedStyle(gridEl).gridTemplateRows !== 'masonry') {
-    console.log("css masonry grid not supported, falling back to js.");
+    console.warn("css masonry grid not supported, falling back to js for support.");
     grid = {
         _el: gridEl,
         gap: parseFloat(getComputedStyle(gridEl).gap),
@@ -58,28 +59,41 @@ if (getComputedStyle(gridEl).gridTemplateRows !== 'masonry') {
 }
 
 function layout() {
-    if (grid != undefined) {
-        // get the post-resize/ load number of columns
-        let ncol = getComputedStyle(grid._el).gridTemplateColumns.split(' ').length;
-        console.log("layouting", grid);
-        if (grid.ncol !== ncol) {
-            grid.ncol = ncol;
+    if (grid === undefined) {
+        return undefined // no grid to layout
+    }
 
-            // revert to initial positioning, no margin 
-            grid.items.forEach(c => c.style.removeProperty('margin-top'));
+    // get the post-resize/ load number of columns
+    let ncol = getComputedStyle(grid._el).gridTemplateColumns.split(' ').length;
 
-            // if we have more than one column 
-            if (grid.ncol > 1) {
-                grid.items.slice(ncol).forEach((c, i) => {
-                    let previous_end = grid.items[i].getBoundingClientRect().bottom; // bottom edge of item above 
-                    let current_start = c.getBoundingClientRect().top; // top edge of current item
+    if (grid.ncol === ncol) {
+        return undefined // no need to re-calculate layout/ 
+    }
 
-                    c.style.marginTop = `${previous_end + grid.gap - current_start}px`;
-                });
-            }
-        }
-    };
-}
+    /* update number of columns */
+    grid.ncol = ncol;
+
+    // revert to initial positioning, no margin 
+    grid.items.forEach(c => c.style.removeProperty('margin-top'));
+
+    // if we have more than one column 
+    if (grid.ncol > 1) {
+        grid.items.slice(ncol).forEach((current, i) => {
+            // Make calculation on textarea, not on form as the expend to 
+            // match there neighbours height
+            const currentTextarea = grid.items[i].firstElementChild
+            const nextTextarea = current.firstElementChild
+
+            // Get the surronding coordinate
+            const previous_end = currentTextarea.getBoundingClientRect().bottom; // bottom edge of item above 
+            const current_start = nextTextarea.getBoundingClientRect().top; // top edge of current item
+
+            // Move the box
+            current.style.marginTop = `${previous_end + grid.gap - current_start}px`;
+        });
+    }
+};
+
 
 
 window.addEventListener("load", () => {
@@ -87,9 +101,11 @@ window.addEventListener("load", () => {
     document.querySelectorAll("textarea").forEach(textarea => {
         textarea.addEventListener("input", resizeTextarea);
     });
+
+    layout();
+    addEventListener('resize', layout, false);
 });
 
-window.addEventListener('resize', layout, false);
 
 document.addEventListener("htmx:afterSettle", function (evt) {
     if (evt.detail.requestConfig.elt.id == "0" && evt.detail.successful) {

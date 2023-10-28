@@ -1,11 +1,10 @@
 {{define "note"}}
-<form
-      class="note"
-      id="{{.Id}}"
+<form class="note" 
+      id="{{.Id}}" 
       hx-put="/notes/{{.Id}}"
       hx-trigger="change"
       hx-swap="none">
-    <textarea id="{{.Id}}-content" name=content>{{ .Content }}</textarea>
-    <label hidden for="{{.Id}}-content">Edit this note</label>
+  <textarea id="{{.Id}}-content" name=content>{{ .Content }}</textarea>
+  <label hidden for="{{.Id}}-content">Edit this note</label>
 </form>
 {{end}}
