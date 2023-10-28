@@ -66,26 +66,26 @@ label {
 /* ===== THEME ===== */
 
 :root {
-    --color-primary: #009abd;
-    --color-text: #dbdbdb;
-    --color-bg: #202124;
-    --color-bd: #5f6368;
+    --color-primary: 191, 100%, 37%;
+    --color-text: 0, 0%, 86%;
+    --color-bg: 225, 6%, 13%;
+    --color-bd: 213, 5%, 39%;
 
     color-scheme: dark light;
 }
 
 @media (prefers-color-scheme: light) {
     :root {
-        --color-primary: #20879e;
-        --color-text: #2b2d30;
-        --color-bg: #fdfdfd;
-        --color-bd: #bbbbbb;
+        --color-primary: 191, 68%, 43%;
+        --color-text: 216, 5%, 21%;
+        --color-bg: 0, 0%, 99%;
+        --color-bd: 0, 0%, 61%;
     }
 }
 
 html {
-    color: var(--color-text);
-    background-color: var(--color-bg);
+    color: hsl(var(--color-text));
+    background-color: hsl(var(--color-bg));
     font-family: "Atkinson", sans-serif;
     line-height: 1.5em;
 }
@@ -103,9 +103,7 @@ header {
     justify-content: space-between;
 
     padding: 0.5rem 1rem;
-    border-bottom: solid 2px var(--color-bd);
-    /* color: white; */
-    /* background-color: var(--color-primary); */
+    border-bottom: solid 2px hsl(var(--color-bd));
 }
 
 main {
@@ -140,19 +138,18 @@ search {
 search>input {
     width: 100%;
     padding: 0 1ch;
-    color: #2b2d30;
-    background-color: white;
-    border: 2px solid var(--color-primary);
-    border-radius: 0.25em;
+    color: hsl(var(--color-text));
+    background-color: hsl(var(--color-bd), 0.5);
+    border: none;
+    border-radius: 4px;
     outline: none;
 }
 
 search>input:focus {
-    outline: 0.5px solid white;
-    outline-offset: 0.5px;
+    outline: 2px solid hsl(var(--color-primary));
 }
 
-/* ===== TEXTAREA ===== */
+/* ===== Notes ===== */
 
 textarea {
     padding: .5em;
@@ -161,16 +158,15 @@ textarea {
     font-family: "Atkinson", sans-serif;
     line-height: 1.5em;
     resize: none;
-    color: var(--color-text);
-    background-color: var(--color-bg);
-    border: solid 2px var(--color-bd);
+    color: hsl(var(--color-text));
+    background-color: hsl(var(--color-bg));
+    border: solid 2px hsl(var(--color-bd));
     border-radius: 8px;
 }
 
 textarea:focus {
-    border: solid 2px var(--color-primary);
-    outline: solid 2px var(--color-primary);
-    border-radius: 0.25em;
+    border: solid 2px hsl(var(--color-primary));
+    outline: none;
 }
 
 
