@@ -111,9 +111,17 @@ header {
 
 main {
     min-height: calc(100vh - 2rem);
-    margin: 2rem auto;
 }
 
+#notes {
+    display: grid;
+    grid-template-rows: masonry;
+    grid-template-columns: repeat(auto-fill, min(35ch, 100%));
+
+    justify-content: center;
+    gap: 1em;
+    padding: 1em;
+}
 
 
 /* ===== TOP BAR ===== */
@@ -149,7 +157,7 @@ search>input:focus {
 
 textarea {
     padding: .5em;
-    width: 350px;
+    width: 100%;
     font-size: 1rem;
     font-family: "Atkinson", sans-serif;
     line-height: 1.5em;
@@ -157,29 +165,14 @@ textarea {
     color: var(--color-text);
     background-color: var(--color-bg2);
     border: solid 2px grey;
-    /* vertical space for masonory*/
-    margin-bottom: 15px;
 }
 
 textarea:focus {
     border: solid 2px var(--color-primary);
     outline: solid 2px var(--color-primary);
-    /* outline-offset: 0.25em; */
     border-radius: 0.25em;
 }
 
-/* ===== LINKS ===== */
-a:link {
-    color: var(--color-primary)
-}
-
-a:visited {
-    color: var(--color-secondary)
-}
-
-a:hover {
-    opacity: 0.8
-}
 
 /* ===== UTILS ====== */
 .separator {

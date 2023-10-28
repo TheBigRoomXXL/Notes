@@ -1,5 +1,5 @@
-{{ define "main" }}
-    {{ template "create_note" . }}
+{{ define "notes"}}
+    {{ template "create_note" .}}
     {{ range $note := . }}
         {{ template "note" . }}
     {{ end }}

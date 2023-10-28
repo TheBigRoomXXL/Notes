@@ -15,7 +15,6 @@
     <link rel="apple-touch-icon" href="static/favicon.png" type="image/svg+xml">
 
     <link rel="stylesheet" href="/static/styles.css">
-    <script src="/static/lib/masonry.min.js"></script>
     <script src="/static/lib/htmx.min.js"></script>
 </head>
 
@@ -24,8 +23,10 @@
         <h1>Nøtes</h1>
         {{ template "search" }}
     </header>
-    <main id="notes">
-        {{ template "main" .}}
+    <main>
+        <div id="notes">
+            {{ template "notes" .}}
+        </div>
     </main>
     <script src="/static/app.js"></script>
 </body>

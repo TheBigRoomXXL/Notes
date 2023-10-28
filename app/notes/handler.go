@@ -38,7 +38,7 @@ func GetNotes(c echo.Context) error {
 		return err
 	}
 
-	err = c.Render(http.StatusOK, "main", notes)
+	err = c.Render(http.StatusOK, "notes", notes)
 	if err != nil {
 		log.Error(err)
 	}

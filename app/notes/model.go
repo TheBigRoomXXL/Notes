@@ -26,12 +26,6 @@ func SelectNotes(db *sql.DB, query noteSearch) ([]Note, error) {
 	fmt.Print(query.Search)
 	fmt.Print(query.Search == "")
 
-	fmt.Println(`
-	SELECT id, content
-	FROM notes 
-	WHERE content LIKE '%'||?||'%'
-	ORDER BY updated_at DESC
-	`, query.Search)
 	rows, err := db.Query(`
 		SELECT id, content
 		FROM notes 
