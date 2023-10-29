@@ -4,8 +4,8 @@
 
 ## TO DO
 
+- Doc comments
 - Unit test
-- Delete operation
 - pagination
 - Refactor pipiline (serialize | validate | State management | serialize)
 - Footer with tags
@@ -15,8 +15,10 @@
 - theme management + custom css
 - REST API with rapidoc
 - Packaging
-- Migration magement
-- import export
+- Migration management
+- import export from other note app
+- Delete confirm
+- Updated / Deleted successfully notification
 
 
 ## Acknownledge

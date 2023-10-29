@@ -1,0 +1,76 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "A simple REST API for a simple note taking app.",
+        "title": "Nøtes API",
+        "contact": {
+            "name": "Github",
+            "url": "https://github.com/theBigRoomXXL/notes/"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/TheBigRoomXXL/Notes/raw/main/LICENCE.md"
+        },
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/notes": {
+            "get": {
+                "description": "Perform a Full Text Search on your notes. Ordered by most recent update.",
+                "consumes": [
+                    "application/json",
+                    " application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json",
+                    " text/html"
+                ],
+                "summary": "List your notes",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "FTS query",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/notes.Note"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/notes.Note"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "notes.Note": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

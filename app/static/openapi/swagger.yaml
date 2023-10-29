@@ -1,0 +1,51 @@
+definitions:
+  notes.Note:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+info:
+  contact:
+    name: Github
+    url: https://github.com/theBigRoomXXL/notes/
+  description: A simple REST API for a simple note taking app.
+  license:
+    name: MIT
+    url: https://github.com/TheBigRoomXXL/Notes/raw/main/LICENCE.md
+  title: Nøtes API
+  version: 0.0.1
+paths:
+  /notes:
+    get:
+      consumes:
+      - application/json
+      - ' application/x-www-form-urlencoded'
+      description: Perform a Full Text Search on your notes. Ordered by most recent
+        update.
+      parameters:
+      - description: FTS query
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      - ' text/html'
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/notes.Note'
+            type: array
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/notes.Note'
+      summary: List your notes
+swagger: "2.0"

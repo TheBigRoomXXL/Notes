@@ -17,6 +17,14 @@ func Index(c echo.Context) error {
 	return c.Render(http.StatusOK, "index", notes)
 }
 
+// @Summary List your notes
+// @Description  Perform a Full Text Search on your notes. Ordered by most recent update.
+// @Accept       json, application/x-www-form-urlencoded
+// @Produce      json, text/html
+// @Param        search  query string false "FTS query"
+// @Success      200  {array}   notes.Note
+// @Failure      422  {object}  notes.Note
+// @Router       /notes [get]
 func GetNotes(c echo.Context) error {
 	var validInput noteSearch
 	err := c.Bind(&validInput)

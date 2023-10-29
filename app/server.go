@@ -28,7 +28,10 @@ func Run() {
 	}))
 	fmt.Println("here")
 	//Routes
+	e.Static("/docs", "docs/")
+
 	e.Static("/static", "app/static")
+
 	e.GET("/", note.Index)
 	e.GET("/notes", note.GetNotes)
 	e.POST("/notes", note.PostNotes)
