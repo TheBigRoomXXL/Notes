@@ -42,6 +42,12 @@ function handleSearchSuccessfull() {
     search.focus();
 }
 
+// function handleUpdateSuccessfull(noteElement) {
+//     textarea = noteElement.firstElementChild
+//     resizeTextarea.call(textarea);
+//     textarea.addEventListener("input", resizeTextarea);
+// }
+
 
 // JS fallback for masonry
 let grid = undefined;
@@ -122,7 +128,7 @@ document.body.addEventListener('htmx:beforeSwap', function (evt) {
         // swaped in order to be removed. 
         // For details see https://github.com/labstack/echo/issues/241
         evt.detail.shouldSwap = true;
-        console.log("should swap!")
+        evt.detail.elt.setAttribute("hx-swap", "outerHTML")
     }
 });
 
