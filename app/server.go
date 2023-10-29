@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	note "notes/app/notes"
 	"strings"
 
@@ -25,13 +26,14 @@ func Run() {
 			return !strings.Contains(c.Path(), "static")
 		},
 	}))
-
+	fmt.Println("here")
 	//Routes
 	e.Static("/static", "app/static")
 	e.GET("/", note.Index)
 	e.GET("/notes", note.GetNotes)
 	e.POST("/notes", note.PostNotes)
 	e.PUT("/notes/:id", note.PutNote)
+	e.DELETE("/notes/:id", note.DelNote)
 
 	e.Logger.Fatal(e.Start(":3000"))
 }

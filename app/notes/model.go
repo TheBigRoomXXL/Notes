@@ -80,15 +80,40 @@ func UpdateNote(db *sql.DB, note Note) (Note, error) {
 		WHERE id = $2`,
 		note.Content,
 		note.Id)
+
 	if err != nil {
 		return note, err
 	}
 
-	if tx.Commit() != nil {
+	err = tx.Commit()
+	if err != nil {
 		return note, err
 	}
 
 	return note, nil
+}
+
+func DeleteNote(db *sql.DB, note Note) error {
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+
+	_, err = tx.Exec(`
+		DELETE FROM notes 
+		WHERE id = $1
+	`, note.Id)
+
+	if err != nil {
+		return err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func getKeywords(query noteSearch) []interface{} {

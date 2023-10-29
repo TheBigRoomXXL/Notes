@@ -115,3 +115,16 @@ document.addEventListener("htmx:afterSettle", function (evt) {
         handleSearchSuccessfull(evt);
     }
 });
+
+document.body.addEventListener('htmx:beforeSwap', function (evt) {
+    if (evt.detail.xhr.status === 204) {
+        // 204 represent a succesful DELETE and as such the elment should be 
+        // swaped in order to be removed. 
+        // For details see https://github.com/labstack/echo/issues/241
+        evt.detail.shouldSwap = true;
+        console.log("should swap!")
+    }
+});
+
+
+
