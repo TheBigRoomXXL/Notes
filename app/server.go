@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	note "notes/app/notes"
 	"strings"
 
@@ -10,26 +9,31 @@ import (
 )
 
 func Run() {
-	// Setup Database
-	db := CreateDbConnection("notes.db")
-	defer db.Close()
 
 	// Setup Echo
 	e := echo.New()
+
+	// Load template for use by handlers
 	e.Renderer = T
+
+	//Text Loging
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "${status}: ${method} \"${uri}\" \n",
 	}))
+
+	// Setup Database
+	db := CreateDbConnection("notes.db")
+	defer db.Close()
 	e.Use(middlewareDb(db))
+
+	// Gzip everything comming from static
 	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
 		Skipper: func(c echo.Context) bool {
 			return !strings.Contains(c.Path(), "static")
 		},
 	}))
-	fmt.Println("here")
-	//Routes
-	e.Static("/docs", "docs/")
 
+	// Routes
 	e.Static("/static", "app/static")
 
 	e.GET("/", note.Index)
@@ -38,5 +42,6 @@ func Run() {
 	e.PUT("/notes/:id", note.PutNote)
 	e.DELETE("/notes/:id", note.DelNote)
 
+	// Run
 	e.Logger.Fatal(e.Start(":3000"))
 }
