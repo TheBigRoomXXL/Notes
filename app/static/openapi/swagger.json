@@ -25,6 +25,9 @@
                     "application/json",
                     " text/html"
                 ],
+                "tags": [
+                    "notes"
+                ],
                 "summary": "List your notes",
                 "parameters": [
                     {
@@ -43,6 +46,139 @@
                                 "$ref": "#/definitions/notes.Note"
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/notes.Note"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Save a note to the database and return the ID",
+                "consumes": [
+                    "application/json",
+                    " application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json",
+                    " text/html"
+                ],
+                "tags": [
+                    "notes"
+                ],
+                "summary": "Create a notes",
+                "parameters": [
+                    {
+                        "description": "The content of the note",
+                        "name": "content",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/notes.Note"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/notes.Note"
+                        }
+                    }
+                }
+            }
+        },
+        "/notes/{id}": {
+            "put": {
+                "description": "Default behavior is just to update the record in the DB and return 200 but if the content of the note is empty then it's treated as a DELETE request and return 204.",
+                "consumes": [
+                    "application/json",
+                    " application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json",
+                    " text/html"
+                ],
+                "tags": [
+                    "notes"
+                ],
+                "summary": "Update or delete a notes",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The note identifier",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "The content of the note",
+                        "name": "content",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/notes.Note"
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": ""
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/notes.Note"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove a record from the database",
+                "consumes": [
+                    "application/json",
+                    " application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json",
+                    " text/html"
+                ],
+                "tags": [
+                    "notes"
+                ],
+                "summary": "Delete a notes",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "The note identifier",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": ""
                     },
                     "422": {
                         "description": "Unprocessable Entity",

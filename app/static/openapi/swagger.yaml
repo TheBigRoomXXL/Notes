@@ -48,4 +48,98 @@ paths:
           schema:
             $ref: '#/definitions/notes.Note'
       summary: List your notes
+      tags:
+      - notes
+    post:
+      consumes:
+      - application/json
+      - ' application/x-www-form-urlencoded'
+      description: Save a note to the database and return the ID
+      parameters:
+      - description: The content of the note
+        in: body
+        name: content
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      - ' text/html'
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/notes.Note'
+            type: array
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/notes.Note'
+      summary: Create a notes
+      tags:
+      - notes
+  /notes/{id}:
+    delete:
+      consumes:
+      - application/json
+      - ' application/x-www-form-urlencoded'
+      description: Remove a record from the database
+      parameters:
+      - description: The note identifier
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      - ' text/html'
+      responses:
+        "204":
+          description: ""
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/notes.Note'
+      summary: Delete a notes
+      tags:
+      - notes
+    put:
+      consumes:
+      - application/json
+      - ' application/x-www-form-urlencoded'
+      description: Default behavior is just to update the record in the DB and return
+        200 but if the content of the note is empty then it's treated as a DELETE
+        request and return 204.
+      parameters:
+      - description: The note identifier
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: The content of the note
+        in: body
+        name: content
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      - ' text/html'
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/notes.Note'
+            type: array
+        "204":
+          description: ""
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/notes.Note'
+      summary: Update or delete a notes
+      tags:
+      - notes
 swagger: "2.0"

@@ -21,6 +21,17 @@
 - Updated / Deleted successfully notification
 
 
+## FIX 
+ 
+ - error page, logging and swagger doc
+
+## Generate OpenAPI Specs
+
+```bash
+swag init --output app/static/openapi/ --outputTypes "json,yaml"
+```
+
+
 ## Acknownledge
 
 CSS Reset from [Andy-Bell](https://andy-bell.co.uk/a-more-modern-css-reset/)
