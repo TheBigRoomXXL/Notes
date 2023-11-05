@@ -1,6 +1,9 @@
 package main
 
-import "notes/app"
+import (
+	cli "notes/app/cli"
+	"os"
+)
 
 // @title Nøtes API
 // @version 0.0.1
@@ -12,5 +15,8 @@ import "notes/app"
 // @contact.name Github
 // @contact.url https://github.com/theBigRoomXXL/notes/
 func main() {
-	app.Run()
+	err := cli.RootCmd.Execute()
+	if err != nil {
+		os.Exit(1)
+	}
 }

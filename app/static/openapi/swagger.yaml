@@ -10,6 +10,14 @@ definitions:
       updated_at:
         type: string
     type: object
+  users.User:
+    properties:
+      id:
+        type: integer
+      name:
+        description: name is unique by db constraint.
+        type: string
+    type: object
 info:
   contact:
     name: Github
@@ -142,4 +150,35 @@ paths:
       summary: Update or delete a notes
       tags:
       - notes
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      - ' application/x-www-form-urlencoded'
+      description: Perform a Full Text Search on your users. Ordered by most recent
+        update.
+      parameters:
+      - description: FTS query
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      - ' text/html'
+      responses:
+        "302":
+          description: /
+          schema:
+            type: string
+        "401":
+          description: login failed
+          schema:
+            type: string
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: List your users
+      tags:
+      - users
 swagger: "2.0"

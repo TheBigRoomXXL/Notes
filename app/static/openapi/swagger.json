@@ -188,6 +188,51 @@
                     }
                 }
             }
+        },
+        "/users/login": {
+            "post": {
+                "description": "Perform a Full Text Search on your users. Ordered by most recent update.",
+                "consumes": [
+                    "application/json",
+                    " application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json",
+                    " text/html"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "List your users",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "FTS query",
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "/",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "login failed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -204,6 +249,18 @@
                     "type": "integer"
                 },
                 "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "users.User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "name is unique by db constraint.",
                     "type": "string"
                 }
             }
