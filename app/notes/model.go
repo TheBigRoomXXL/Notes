@@ -18,8 +18,8 @@ type noteSearch struct {
 type Note struct {
 	Id         int
 	Content    string
-	Created_at time.Time
-	Updated_at time.Time
+	Created_at time.Time // Managed by db with default value
+	Updated_at time.Time // Managed by db with trigger
 }
 
 func SelectNotes(db *sql.DB, query noteSearch) ([]Note, error) {
