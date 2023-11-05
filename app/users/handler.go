@@ -4,7 +4,6 @@ package users
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/sessions"
@@ -25,13 +24,6 @@ import (
 // @Failure      401  string    "login failed"
 // @Router       /users/login [post]
 func PostLogin(c echo.Context) error {
-	err := postLogin(c)
-	fmt.Println(err)
-	return err
-
-}
-
-func postLogin(c echo.Context) error {
 	var validInput UserSerializer
 	err := c.Bind(&validInput)
 	if err != nil {
@@ -69,4 +61,5 @@ func postLogin(c echo.Context) error {
 
 	//TO DO: Return user object if accept JSON
 	return c.Redirect(http.StatusFound, "/")
+
 }
