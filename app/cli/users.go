@@ -2,7 +2,7 @@ package cli
 
 import (
 	"fmt"
-	"notes/app/server"
+	"notes/app/shared"
 	"notes/app/users"
 
 	"github.com/spf13/cobra"
@@ -27,7 +27,7 @@ func getUsersCmd() *cobra.Command {
 }
 
 func createUser(cmd *cobra.Command, args []string) error {
-	db := server.CreateDbConnection("notes.db")
+	db := shared.CreateDbConnection("notes.db")
 	user := users.UserSerializer{
 		Username: args[0],
 		Password: args[1],

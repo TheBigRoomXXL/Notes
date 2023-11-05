@@ -2,6 +2,7 @@ package server
 
 import (
 	notes "notes/app/notes"
+	"notes/app/shared"
 	"notes/app/users"
 	"strings"
 
@@ -17,12 +18,12 @@ func Run() {
 	e := echo.New()
 
 	// Set Session for Authentification
-	e.Use(session.Middleware(sessions.NewCookieStore(GenerateRandomBytes(32))))
+	e.Use(session.Middleware(sessions.NewCookieStore(shared.GenerateRandomBytes(32))))
 
 	// Setup Database
-	db := CreateDbConnection("notes.db")
+	db := shared.CreateDbConnection("notes.db")
 	defer db.Close()
-	e.Use(middlewareDb(db))
+	e.Use(shared.MiddlewareDb(db))
 
 	// Set Logging to text instead of JSON
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -40,7 +41,7 @@ func Run() {
 	}))
 
 	// Routes
-	e.Static("/static", "app/static")
+	e.Static("/static", "app/server/static")
 
 	e.GET("/", notes.Index)
 	e.GET("/notes", notes.GetNotes)
