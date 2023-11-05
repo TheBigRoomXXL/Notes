@@ -6,6 +6,11 @@ import (
 	"time"
 )
 
+// This struct is only used to generate the openapi documentation
+type JustContent struct {
+	Content string `form:"content" json:"content"`
+}
+
 type noteSerializer struct {
 	Id      int    `param:"id" form:"id" json:"id"`
 	Content string `form:"content" json:"content"`

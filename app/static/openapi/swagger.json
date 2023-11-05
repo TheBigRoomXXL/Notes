@@ -71,12 +71,12 @@
                 "summary": "Create a notes",
                 "parameters": [
                     {
-                        "description": "The content of the note",
-                        "name": "content",
+                        "description": "The content of your note. Id is ignored",
+                        "name": "note",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/notes.JustContent"
                         }
                     }
                 ],
@@ -123,12 +123,12 @@
                         "required": true
                     },
                     {
-                        "description": "The content of the note",
-                        "name": "content",
+                        "description": "The content of your note.",
+                        "name": "note",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/notes.JustContent"
                         }
                     }
                 ],
@@ -191,7 +191,7 @@
         },
         "/users/login": {
             "post": {
-                "description": "Perform a Full Text Search on your users. Ordered by most recent update.",
+                "description": "Try to login. \"Accept: text/html\" will trigger a redirect. \"Accept: application/json\" will send back the user object.",
                 "consumes": [
                     "application/json",
                     " application/x-www-form-urlencoded"
@@ -203,21 +203,27 @@
                 "tags": [
                     "users"
                 ],
-                "summary": "List your users",
+                "summary": "Login",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "FTS query",
-                        "name": "search",
-                        "in": "query"
+                        "description": "username and password for authentification",
+                        "name": "userCredential",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/users.UserSerializer"
+                        }
                     }
                 ],
                 "responses": {
-                    "302": {
-                        "description": "/",
+                    "200": {
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/users.User"
                         }
+                    },
+                    "302": {
+                        "description": ""
                     },
                     "401": {
                         "description": "login failed",
@@ -236,6 +242,14 @@
         }
     },
     "definitions": {
+        "notes.JustContent": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
         "notes.Note": {
             "type": "object",
             "properties": {
@@ -243,12 +257,14 @@
                     "type": "string"
                 },
                 "created_at": {
+                    "description": "Managed by db with default value",
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
                 "updated_at": {
+                    "description": "Managed by db with trigger",
                     "type": "string"
                 }
             }
@@ -256,11 +272,27 @@
         "users.User": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer"
+                "created_at": {
+                    "description": "Managed by db with default value",
+                    "type": "string"
                 },
-                "name": {
-                    "description": "name is unique by db constraint.",
+                "updated_at": {
+                    "description": "Managed by db with trigger",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "Primary key",
+                    "type": "string"
+                }
+            }
+        },
+        "users.UserSerializer": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

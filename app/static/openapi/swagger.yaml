@@ -1,21 +1,39 @@
 definitions:
+  notes.JustContent:
+    properties:
+      content:
+        type: string
+    type: object
   notes.Note:
     properties:
       content:
         type: string
       created_at:
+        description: Managed by db with default value
         type: string
       id:
         type: integer
       updated_at:
+        description: Managed by db with trigger
         type: string
     type: object
   users.User:
     properties:
-      id:
-        type: integer
-      name:
-        description: name is unique by db constraint.
+      created_at:
+        description: Managed by db with default value
+        type: string
+      updated_at:
+        description: Managed by db with trigger
+        type: string
+      username:
+        description: Primary key
+        type: string
+    type: object
+  users.UserSerializer:
+    properties:
+      password:
+        type: string
+      username:
         type: string
     type: object
 info:
@@ -64,12 +82,12 @@ paths:
       - ' application/x-www-form-urlencoded'
       description: Save a note to the database and return the ID
       parameters:
-      - description: The content of the note
+      - description: The content of your note. Id is ignored
         in: body
-        name: content
+        name: note
         required: true
         schema:
-          type: string
+          $ref: '#/definitions/notes.JustContent'
       produces:
       - application/json
       - ' text/html'
@@ -125,12 +143,12 @@ paths:
         name: id
         required: true
         type: integer
-      - description: The content of the note
+      - description: The content of your note.
         in: body
-        name: content
+        name: note
         required: true
         schema:
-          type: string
+          $ref: '#/definitions/notes.JustContent'
       produces:
       - application/json
       - ' text/html'
@@ -155,21 +173,25 @@ paths:
       consumes:
       - application/json
       - ' application/x-www-form-urlencoded'
-      description: Perform a Full Text Search on your users. Ordered by most recent
-        update.
+      description: 'Try to login. "Accept: text/html" will trigger a redirect. "Accept:
+        application/json" will send back the user object.'
       parameters:
-      - description: FTS query
-        in: query
-        name: search
-        type: string
+      - description: username and password for authentification
+        in: body
+        name: userCredential
+        required: true
+        schema:
+          $ref: '#/definitions/users.UserSerializer'
       produces:
       - application/json
       - ' text/html'
       responses:
-        "302":
-          description: /
+        "200":
+          description: OK
           schema:
-            type: string
+            $ref: '#/definitions/users.User'
+        "302":
+          description: ""
         "401":
           description: login failed
           schema:
@@ -178,7 +200,7 @@ paths:
           description: Unprocessable Entity
           schema:
             $ref: '#/definitions/users.User'
-      summary: List your users
+      summary: Login
       tags:
       - users
 swagger: "2.0"

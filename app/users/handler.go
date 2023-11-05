@@ -16,12 +16,11 @@ import (
 // @Tags users
 // @Accept       json, application/x-www-form-urlencoded
 // @Produce      json, text/html
-// @Param        name string "username"
-// @Param        search  query string false "FTS query"
-// @Success      200  {object}  users.User
+// @Param        userCredential body users.UserSerializer true "username and password for authentification"
+// @Success      200  {object} users.User
 // @Success      302  ""
-// @Failure      422  {object}  users.User
-// @Failure      401  string    "login failed"
+// @Failure      422  {object} users.User
+// @Failure      401  string  "login failed"
 // @Router       /users/login [post]
 func PostLogin(c echo.Context) error {
 	var validInput UserSerializer

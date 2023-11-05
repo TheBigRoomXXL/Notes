@@ -13,7 +13,7 @@
 - better style
 - animate card transition
 - theme management + custom css
-- REST API with rapidoc
+- support JSON  for endpoints
 - Packaging
 - Migration management
 - import export from other note app

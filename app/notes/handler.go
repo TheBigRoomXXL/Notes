@@ -48,7 +48,7 @@ func GetNotes(c echo.Context) error {
 // @Tags notes
 // @Accept       json, application/x-www-form-urlencoded
 // @Produce      json, text/html
-// @Param        content  body string  true "The content of the note"
+// @Param        note body notes.JustContent true "The content of your note. Id is ignored"
 // @Success      200  {array}   notes.Note
 // @Failure      422  {object}  notes.Note
 // @Router       /notes [post]
@@ -76,7 +76,7 @@ func PostNotes(c echo.Context) error {
 // @Accept       json, application/x-www-form-urlencoded
 // @Produce      json, text/html
 // @Param        id  path int  true "The note identifier"
-// @Param        content  body string  true "The content of the note"
+// @Param        note body notes.JustContent true "The content of your note."
 // @Success      200  {array}   notes.Note
 // @Success      204  ""
 // @Failure      422  {object}  notes.Note
