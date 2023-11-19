@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/gorilla/sessions v1.2.1
+	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/echo-contrib v0.15.0
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/mattn/go-sqlite3 v1.14.17

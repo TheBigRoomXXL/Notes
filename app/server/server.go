@@ -23,12 +23,15 @@ func Run() {
 	// Setup Database
 	db := shared.CreateDbConnection("notes.db")
 	defer db.Close()
-	e.Use(shared.MiddlewareDb(db))
+	e.Use(dbMidddleware(db))
 
 	// Set Logging to text instead of JSON
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "${status}: ${method} \"${uri}\" \n",
 	}))
+
+	// Custom error handle with RFC 9457 Problem Details
+	e.HTTPErrorHandler = RFC9457ErrorHandler
 
 	// Load template for use by handlers
 	e.Renderer = T
